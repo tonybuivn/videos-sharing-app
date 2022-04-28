@@ -21,8 +21,6 @@ const Header = () => {
   // TODO: Can call 1 useSelector ?
   const isLoggingIn = useSelector(state => state.authentication.isLoggingIn)
   const loggedIn = useSelector(state => state.authentication.loggedIn)
-  console.log('====== loggedIn')
-  console.log(loggedIn)
 
   const dispatch = useDispatch()
   const location = useLocation()
