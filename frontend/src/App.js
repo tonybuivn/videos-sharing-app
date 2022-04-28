@@ -1,14 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { Container } from 'react-bootstrap';
+import Header from './components/Header';
+import HomePage from './containers/HomePage'
+import AboutPage from './containers/AboutPage'
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        Hello World! This is React
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Container>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+        </Routes>
+      </Container>
+    </BrowserRouter>
+  )
 }
 
 export default App;
