@@ -9,7 +9,7 @@ class Api::V1::UsersController < ApplicationController
       token = encode_token({ user_id: @user.id })
       render json: { user: @user, jwt_token: token }
     else
-      render json: { error: 'Invalid username or password' }
+      render json: { error: 'Invalid username or password' }, status: :unauthorized
     end
   end
 
