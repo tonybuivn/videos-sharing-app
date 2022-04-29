@@ -69,7 +69,7 @@ const Header = () => {
     <Link to='/register' className='btn btn-link'>Logout</Link>
   )
 
-  const headerForm = isLoggingIn ? loggedInHeaderForm : notLoggedInHeaderForm
+  const headerForm = loggedIn ? loggedInHeaderForm : notLoggedInHeaderForm
 
   return(
     <>
