@@ -1,7 +1,7 @@
 import { USER_CONSTANTS } from '../_constants'
 import { userServices } from '../_services'
 import { history } from '../_helpers'
-import { alertActions } from './alert_actions'
+import { alertActions } from './alert-actions'
 
 const login = (username, password, from) => (dispatch) => {
   dispatch(login_request({ username }))
