@@ -1,1 +1,1 @@
-export * from './base_configs'
+export * from './base-configs'

@@ -1,2 +1,2 @@
-export * from './user_actions'
-export * from './alert_actions'
+export * from './user-actions'
+export * from './alert-actions'
