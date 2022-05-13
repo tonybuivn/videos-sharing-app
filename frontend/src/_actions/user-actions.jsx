@@ -24,11 +24,11 @@ const signup = (signup_input) => (dispatch) => {
   userServices.signup(signup_input)
     .then(
       user => {
-        dispatch(signup_success(user))
+        dispatch(signup_success())
         dispatch(alertActions.success(MESSAGES.SIGNUP_SUCCESS));
       },
       error => {
-        dispatch(signup_failure(error))
+        dispatch(signup_failure())
         dispatch(alertActions.error(error))
       }
     )
@@ -43,9 +43,9 @@ const logout = () => {
 const login_request = (user) => ({ type: USER_CONSTANTS.LOGIN_REQUEST, user })
 const login_success = (user) => ({ type: USER_CONSTANTS.LOGIN_SUCCESS, user })
 const login_failure = (error) => ({ type: USER_CONSTANTS.LOGIN_FAILURE, error })
-const signup_request = (signup_input) => ({ type: USER_CONSTANTS.SIGNUP_REQUEST, signup_input })
-const signup_success = (user) => ({ type: USER_CONSTANTS.SIGNUP_SUCCESS, user })
-const signup_failure = (error) => ({ type: USER_CONSTANTS.SIGNUP_FAILURE, error })
+const signup_request = () => ({ type: USER_CONSTANTS.SIGNUP_REQUEST })
+const signup_success = () => ({ type: USER_CONSTANTS.SIGNUP_SUCCESS })
+const signup_failure = () => ({ type: USER_CONSTANTS.SIGNUP_FAILURE })
 
 export const userActions = {
   login,

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter, Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { history } from './_helpers'
@@ -29,8 +29,8 @@ const App = () => {
         { alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
         <Routes>
           <Route exact path='/' element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/register" element={<SignUpPage />} />
+          <Route path='/about' element={<AboutPage />} />
+          <Route path='/register' element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </Container>
