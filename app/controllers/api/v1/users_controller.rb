@@ -7,7 +7,7 @@ class Api::V1::UsersController < ApplicationController
     @user = User.create(user_params)
     if @user.valid?
       token = encode_token({ user_id: @user.id })
-      render json: { user: @user, jwt_token: token }
+      render json: { user_info: @user, jwt_token: token }
     else
       render json: { error: 'Invalid username or password' }, status: :unauthorized
     end

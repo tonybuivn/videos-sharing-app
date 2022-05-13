@@ -1,6 +1,6 @@
 import { USER_CONSTANTS } from '../_constants'
 
-let user = JSON.parse(localStorage.getItem('user'))
+let user = JSON.parse(localStorage.getItem('auth_user'))
 const initialState = user ? { loggedIn: true, isLoggingIn: false, user: user } : { loggedIn: false }
 
 const authentication = (state = initialState, action) => {
@@ -14,7 +14,7 @@ const authentication = (state = initialState, action) => {
     case USER_CONSTANTS.LOGIN_FAILURE:
       return { ...state, isLoggingIn: false, error: action.error }
 
-    case USER_CONSTANTS.LOGOUT_REQUEST:
+    case USER_CONSTANTS.LOGOUT:
       return { ...state }
 
     default:
