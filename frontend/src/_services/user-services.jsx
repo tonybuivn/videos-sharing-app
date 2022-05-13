@@ -14,13 +14,14 @@ const login = (username, password) => {
       // store user details and jwt token in local storage
       // to keep user logged in between page refreshes
       // TODO: need to handle data in here in more elegant style
-      localStorage.setItem('user', JSON.stringify(user));
-      return user;
-  });
+      localStorage.setItem('auth_user', JSON.stringify(user))
+      return user
+  })
 }
 
 const logout = () => {
-
+  // remove user from local storage to log user out
+  localStorage.removeItem('auth_user');
 }
 
 const handleResponse = (res) => {

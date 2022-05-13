@@ -19,7 +19,7 @@ const App = () => {
       // clear alert when location changes
       dispatch(alertActions.clear())
     })
-  }, [])
+  }, []) // passing an empty array causes the hook to only be run once when the component first loads
 
   return (
     <BrowserRouter>

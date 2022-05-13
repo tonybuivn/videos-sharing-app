@@ -25,7 +25,7 @@ const Header = () => {
   const dispatch = useDispatch()
   const location = useLocation()
 
-  const [submitted, setSubmitted] = useState(false)
+  // const [submitted, setSubmitted] = useState(false)
 
   // Can make this to custom hooks ?
   const handleChange = (evt) => {
@@ -34,19 +34,25 @@ const Header = () => {
   }
 
   // Handle submit when clicking login button
-  const handleSubmit = (evt) => {
+  const handleLogginSubmit = (evt) => {
     evt.preventDefault()
 
-    setSubmitted(true)
+    // setSubmitted(true)
     if (username && password) {
       const { from } = location.state || { from: { pathname: '/' }}
       dispatch(userActions.login(username, password, from))
     }
   }
 
+  const handleLogout = () => {
+    dispatch(userActions.logout())
+    // TODO: need to refactor here
+    window.location.reload()
+  }
+
   const notLoggedInHeaderForm = (
-    // Add validation for username and password
-    <Form className='d-flex' onSubmit={handleSubmit}>
+    // TODO: Add validation for username and password
+    <Form className='d-flex' onSubmit={handleLogginSubmit}>
       <FormControl type='text' name='username' placeholder='Username'
         className='me-2'
         value={username}
@@ -66,9 +72,10 @@ const Header = () => {
   )
       
   const loggedInHeaderForm = (
-    <Link to='/register' className='btn btn-link'>Logout</Link>
+    <Button variant="link" onClick={handleLogout}>Logout</Button>
   )
 
+  // TODO: check authorization mechanism here
   const headerForm = loggedIn ? loggedInHeaderForm : notLoggedInHeaderForm
 
   return(
