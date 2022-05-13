@@ -6,7 +6,7 @@ const login = (username, password) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })
-  };
+  }
 
   return fetch(`${baseConfigs.API_URL}/login`, request)
     .then(handleResponse)
@@ -21,7 +21,7 @@ const login = (username, password) => {
 
 const logout = () => {
   // remove user from local storage to log user out
-  localStorage.removeItem('auth_user');
+  localStorage.removeItem('auth_user')
 }
 
 const handleResponse = (res) => {
