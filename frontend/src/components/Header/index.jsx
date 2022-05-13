@@ -6,7 +6,6 @@ import {
   Nav,
   Navbar,
   Form,
-  FormControl,
   Button
 } from 'react-bootstrap'
 
@@ -53,17 +52,17 @@ const Header = () => {
   const notLoggedInHeaderForm = (
     // TODO: Add validation for username and password
     <Form className='d-flex' onSubmit={handleLogginSubmit}>
-      <FormControl type='text' name='username' placeholder='Username'
+      <Form.Control type='text' name='username' placeholder='Username'
         className='me-2'
         value={username}
         onChange={handleChange}
       />
-      <FormControl type='password' name='password' placeholder='Password'
+      <Form.Control type='password' name='password' placeholder='Password'
         className='me-2'
         value={password}
         onChange={handleChange}
       />
-      <Button variant='outline-success' style={{display: 'flex'}} className='me-2' type='submit'>
+      <Button variant='outline-success' className='me-2' type='submit'>
         Login
         { isLoggingIn && <span className='spinner-border spinner-border-sm ms-1 my-auto'></span> }
       </Button>

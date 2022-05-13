@@ -19,6 +19,16 @@ const login = (username, password) => {
   })
 }
 
+const signup = (signup_input) => {
+  const request = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(signup_input)
+  }
+
+  return fetch(`${baseConfigs.API_URL}/signup`, request).then(handleResponse)
+}
+
 const logout = () => {
   // remove user from local storage to log user out
   localStorage.removeItem('auth_user')
@@ -31,6 +41,7 @@ const handleResponse = (res) => {
       if(res.status === 401) {
         // auto logout if 401 (Unauthorized) response returned from api
         logout()
+        // TODO: Check when handle error
         // useLocation().reload(true)
       }
 
@@ -44,5 +55,6 @@ const handleResponse = (res) => {
 
 export const userServices = {
   login,
+  signup,
   logout
 }
