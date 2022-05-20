@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -7,7 +7,7 @@ import {
 
 import { userActions } from '../_actions'
 
-const SignUpPage = () => {
+const SignInPage = () => {
 
   const signInTextStyle = {
     fontSize: '14px',
@@ -19,39 +19,41 @@ const SignUpPage = () => {
   const [fields, setFields] = useState({
     username: '',
     password: '',
-    confirmPassword: '',
   })
+  const { username, password } = fields
   const [submitted, setSubmitted] = useState(false)
-  const isSigningUp = useSelector(state => state.signup.isSigningUp);
-
-  const { username, password, confirmPassword } = fields
+  const isSigningIn = useSelector(state => state.authentication.isSigningIn);
 
   const dispatch = useDispatch()
 
+  useEffect(() => { 
+    dispatch(userActions.logout()); 
+  }, []);
+
+  // TODO: custom hook
   const handleChange = (evt) => {
     const { name, value } = evt.target
     setFields(fields => ({ ...fields, [name]: value }))
   }
 
-  const handleSignUpSubmit = (evt) => {
+  const handleSignInSubmit = (evt) => {
     evt.preventDefault()
 
     setSubmitted(true)
-    if (username && password && (password === confirmPassword)) {
-      dispatch(userActions.signup({ username, password }, navigator))
+    if (username && password) {
+      dispatch(userActions.signin({ username, password }, navigator))
     }
   }
 
   // TODO: Refactor form input validation
   const isEmptyUsername = submitted && !username
   const isEmptyPassword = submitted && !password
-  const passwordConfirmNotMatch = submitted && (password !== confirmPassword)
 
   return (
     <div className="d-flex justify-content-center">
       <div className='border border-1 rounded-3' style={{ width: '30%' }}>
-        <Form className="m-3" onSubmit={handleSignUpSubmit}>
-          <h3 className="text-center">Sign Up</h3>
+        <Form className="m-3" onSubmit={handleSignInSubmit}>
+          <h3 className="text-center">Sign In</h3>
           <Form.Group className='mb-3'>
             <Form.Label className='fw-bold'>Username</Form.Label>
             <Form.Control type='text' name='username' placeholder='Enter username'
@@ -71,25 +73,15 @@ const SignUpPage = () => {
             />
             { isEmptyPassword && <span className="invalid-feedback">Password is required</span> }
           </Form.Group>
-
-          <Form.Group className='mb-3'>
-            <Form.Label className='fw-bold'>Confirm Password</Form.Label>
-            <Form.Control type='password' name='confirmPassword' placeholder='Confirm password'
-              className={ passwordConfirmNotMatch ? 'is-invalid' : '' }
-              value={confirmPassword}
-              onChange={handleChange}
-            />
-            { passwordConfirmNotMatch && <span className="invalid-feedback">Confirmation password does not match</span> }
-          </Form.Group>
           <Button className='my-2 w-100' type='submit'>
-            Submit
-            { isSigningUp && <span className="spinner-border spinner-border-sm ms-1 my-auto"></span>}
+            Sign In
+            { isSigningIn && <span className="spinner-border spinner-border-sm ms-1 my-auto"></span>}
           </Button>
-          <p className='float-end' style={signInTextStyle}>Already registered <a href="/sign-in">sign in?</a></p>
+          <p className='float-end' style={signInTextStyle}>New to Video Sharing? <a href="/sign-in">Create an account</a></p>
         </Form>
       </div>
     </div>
   )
 }
 
-export default SignUpPage
+export default SignInPage

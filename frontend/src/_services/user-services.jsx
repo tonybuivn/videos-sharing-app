@@ -1,11 +1,11 @@
 import { baseConfigs } from '../_configs'
 import { useLocation } from 'react-router-dom'
 
-const login = (username, password) => {
+const signin = (signin_input) => {
   const request = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify(signin_input)
   }
 
   return fetch(`${baseConfigs.API_URL}/login`, request)
@@ -48,13 +48,13 @@ const handleResponse = (res) => {
       const error = (data && data.error) || res.statusText
       return Promise.reject(error)
     }
-    
+    console.log('======== 1')   
     return data
   })
 }
 
 export const userServices = {
-  login,
+  signin,
   signup,
   logout
 }

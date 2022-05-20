@@ -1,30 +1,31 @@
 import { USER_CONSTANTS, MESSAGES } from '../_constants'
 import { userServices } from '../_services'
-import { history } from '../_helpers'
 import { alertActions } from './alert-actions'
 
-const login = (username, password, from) => (dispatch) => {
-  dispatch(login_request({ username }))
+const signin = (signin_input, navigator) => (dispatch) => {
+  dispatch(signin_request(signin_input.username))
 
-  userServices.login(username, password)
+  userServices.signin(signin_input)
     .then(
       user => {
-        dispatch(login_success(user))
-        // history.push(from)
+        dispatch(signin_success(user))
+        navigator('/')
+        dispatch(alertActions.success(MESSAGES.SIGNIN_SUCCESS));
       },
       error => {
-        dispatch(login_failure(error))
+        dispatch(signin_failure(error))
         dispatch(alertActions.error(error))
       })
 }
 
-const signup = (signup_input) => (dispatch) => {
+const signup = (signup_input, navigator) => (dispatch) => {
   dispatch(signup_request(signup_input))
 
   userServices.signup(signup_input)
     .then(
       user => {
         dispatch(signup_success())
+        navigator('/signin')
         dispatch(alertActions.success(MESSAGES.SIGNUP_SUCCESS));
       },
       error => {
@@ -40,15 +41,15 @@ const logout = () => {
   return { type: USER_CONSTANTS.LOGOUT }
 }
 
-const login_request = (user) => ({ type: USER_CONSTANTS.LOGIN_REQUEST, user })
-const login_success = (user) => ({ type: USER_CONSTANTS.LOGIN_SUCCESS, user })
-const login_failure = (error) => ({ type: USER_CONSTANTS.LOGIN_FAILURE, error })
+const signin_request = (username) => ({ type: USER_CONSTANTS.SIGNIN_REQUEST, username })
+const signin_success = (user) => ({ type: USER_CONSTANTS.SIGNIN_SUCCESS, user })
+const signin_failure = (error) => ({ type: USER_CONSTANTS.SIGNIN_FAILURE, error })
 const signup_request = () => ({ type: USER_CONSTANTS.SIGNUP_REQUEST })
 const signup_success = () => ({ type: USER_CONSTANTS.SIGNUP_SUCCESS })
 const signup_failure = () => ({ type: USER_CONSTANTS.SIGNUP_FAILURE })
 
 export const userActions = {
-  login,
+  signin,
   signup,
   logout
 }
