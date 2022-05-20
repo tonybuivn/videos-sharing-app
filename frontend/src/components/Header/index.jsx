@@ -1,81 +1,46 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Container,
   Nav,
   Navbar,
-  Form,
   Button
 } from 'react-bootstrap'
 
 import { userActions } from '../../_actions'
 
 const Header = () => {
-  const [fields, setFields] = useState({
-    username: '',
-    password: ''
-  })
-  const { username, password } = fields
   // TODO: Can call 1 useSelector ?
-  const isLoggingIn = useSelector(state => state.authentication.isLoggingIn)
-  const loggedIn = useSelector(state => state.authentication.loggedIn)
+  const signedIn = useSelector(state => state.authentication.signedIn)
+  const user = useSelector(state => state.authentication.user)
+  const username = user ? user.user_info.username : undefined
 
   const dispatch = useDispatch()
-  const location = useLocation()
+  const navigator = useNavigate()
 
   // const [submitted, setSubmitted] = useState(false)
 
-  // Can make this to custom hooks ?
-  const handleChange = (evt) => {
-    const { name, value } = evt.target
-    setFields(fields => ({ ...fields, [name]: value }))
-  }
-
-  // Handle submit when clicking login button
-  const handleLogginSubmit = (evt) => {
-    evt.preventDefault()
-
-    // setSubmitted(true)
-    if (username && password) {
-      const { from } = location.state || { from: { pathname: '/' }}
-      dispatch(userActions.login(username, password, from))
-    }
-  }
-
   const handleLogout = () => {
     dispatch(userActions.logout())
-    // TODO: need to refactor here
-    window.location.reload()
+    navigator(0)
   }
 
-  const notLoggedInHeaderForm = (
-    // TODO: Add validation for username and password
-    <Form className='d-flex' onSubmit={handleLogginSubmit}>
-      <Form.Control type='text' name='username' placeholder='Username'
-        className='me-2'
-        value={username}
-        onChange={handleChange}
-      />
-      <Form.Control type='password' name='password' placeholder='Password'
-        className='me-2'
-        value={password}
-        onChange={handleChange}
-      />
-      <Button variant='outline-success' className='me-2' type='submit'>
-        Login
-        { isLoggingIn && <span className='spinner-border spinner-border-sm ms-1 my-auto'></span> }
-      </Button>
-      <Link to='/register' className='btn btn-link'>Register</Link>
-    </Form>
+  const notLoggedInHeader = (
+    <div>
+      <Link to='/signin' className='btn btn-link'>Signin</Link>
+      <Link to='/signup' className='btn btn-link'>Signup</Link>
+    </div>
   )
       
-  const loggedInHeaderForm = (
-    <Button variant="link" onClick={handleLogout}>Logout</Button>
+  const loggedInHeader = (
+    <div>
+      <span className='align-middle'>Welcome back, <Link to='#'>{username}</Link></span>
+      <Button variant="link" onClick={handleLogout}>Logout</Button>
+    </div>
   )
 
-  // TODO: check authorization mechanism here
-  const headerForm = loggedIn ? loggedInHeaderForm : notLoggedInHeaderForm
+  const headerLink = signedIn ? loggedInHeader : notLoggedInHeader
 
   return(
     <>
@@ -88,7 +53,7 @@ const Header = () => {
             <Link className='nav-link' to='/'>Home</Link>
             <Link className='nav-link' to='/about'>About</Link>
           </Nav>
-          { headerForm }
+          { headerLink }
         </Container>
       </Navbar>
       <br />

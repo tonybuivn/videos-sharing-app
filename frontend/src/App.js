@@ -9,6 +9,7 @@ import { alertActions } from './_actions'
 import Header from './components/Header'
 import HomePage from './containers/HomePage'
 import AboutPage from './containers/AboutPage'
+import SignInPage from './containers/SignInPage'
 import SignUpPage from './containers/SignUpPage'
 
 const App = () => {
@@ -24,13 +25,15 @@ const App = () => {
 
   return (
     <Container>
+      {/* <Router location={history.location} navigator={history}> */}
       <BrowserRouter>
-      <Header />
+        <Header />
         { alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
         <Routes>
           <Route exact path='/' element={<HomePage />} />
           <Route path='/about' element={<AboutPage />} />
-          <Route path='/register' element={<SignUpPage />} />
+          <Route path='/signin' element={<SignInPage />} />
+          <Route path='/signup' element={<SignUpPage />} />
         </Routes>
       </BrowserRouter>
     </Container>
