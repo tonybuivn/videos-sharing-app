@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useHandleInputChange } from '../_customHooks'
 import {
   Form, Button
 } from 'react-bootstrap'
@@ -16,7 +17,7 @@ const SignInPage = () => {
 
   const navigator = useNavigate()
 
-  const [fields, setFields] = useState({
+  const [fields, handleInputChange] = useHandleInputChange({
     username: '',
     password: '',
   })
@@ -29,12 +30,6 @@ const SignInPage = () => {
   useEffect(() => { 
     dispatch(userActions.logout()); 
   }, []);
-
-  // TODO: custom hook
-  const handleChange = (evt) => {
-    const { name, value } = evt.target
-    setFields(fields => ({ ...fields, [name]: value }))
-  }
 
   const handleSignInSubmit = (evt) => {
     evt.preventDefault()
@@ -59,7 +54,7 @@ const SignInPage = () => {
             <Form.Control type='text' name='username' placeholder='Enter username'
               className={ isEmptyUsername ? 'is-invalid' : '' }
               value={username}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             { isEmptyUsername && <span className="invalid-feedback">Username is required</span> }
           </Form.Group>
@@ -69,7 +64,7 @@ const SignInPage = () => {
             <Form.Control type='password' name='password' placeholder='Enter password'
               className={ isEmptyPassword ? 'is-invalid' : '' }
               value={password}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             { isEmptyPassword && <span className="invalid-feedback">Password is required</span> }
           </Form.Group>

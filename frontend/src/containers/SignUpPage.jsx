@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { useHandleInputChange } from '../_customHooks'
 import {
   Form, Button
 } from 'react-bootstrap'
@@ -16,7 +17,7 @@ const SignUpPage = () => {
 
   const navigator = useNavigate()
 
-  const [fields, setFields] = useState({
+  const [fields, handleInputChange] = useHandleInputChange({
     username: '',
     password: '',
     confirmPassword: '',
@@ -27,11 +28,6 @@ const SignUpPage = () => {
   const { username, password, confirmPassword } = fields
 
   const dispatch = useDispatch()
-
-  const handleChange = (evt) => {
-    const { name, value } = evt.target
-    setFields(fields => ({ ...fields, [name]: value }))
-  }
 
   const handleSignUpSubmit = (evt) => {
     evt.preventDefault()
@@ -57,7 +53,7 @@ const SignUpPage = () => {
             <Form.Control type='text' name='username' placeholder='Enter username'
               className={ isEmptyUsername ? 'is-invalid' : '' }
               value={username}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             { isEmptyUsername && <span className="invalid-feedback">Username is required</span> }
           </Form.Group>
@@ -67,7 +63,7 @@ const SignUpPage = () => {
             <Form.Control type='password' name='password' placeholder='Enter password'
               className={ isEmptyPassword ? 'is-invalid' : '' }
               value={password}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             { isEmptyPassword && <span className="invalid-feedback">Password is required</span> }
           </Form.Group>
@@ -77,7 +73,7 @@ const SignUpPage = () => {
             <Form.Control type='password' name='confirmPassword' placeholder='Confirm password'
               className={ passwordConfirmNotMatch ? 'is-invalid' : '' }
               value={confirmPassword}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             { passwordConfirmNotMatch && <span className="invalid-feedback">Confirmation password does not match</span> }
           </Form.Group>

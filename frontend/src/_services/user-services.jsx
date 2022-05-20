@@ -48,7 +48,6 @@ const handleResponse = (res) => {
       const error = (data && data.error) || res.statusText
       return Promise.reject(error)
     }
-    console.log('======== 1')   
     return data
   })
 }
