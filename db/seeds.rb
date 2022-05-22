@@ -14,3 +14,18 @@
     password: Faker::Internet.password
   )
 end
+
+User.all.each do |user|
+  Video.create(
+    title: Faker::Movie.title,
+    embed_id: 'gguozxKlWO0',
+    description: Faker::Quote.matz,
+    user_id: user.id
+  )
+end
+
+# 10.times do
+#   Like.create(
+#     user_id: Faker
+#   )
+# end
