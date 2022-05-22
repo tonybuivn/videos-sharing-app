@@ -23,3 +23,9 @@ User.all.each do |user|
     user_id: user.id
   )
 end
+
+# 10.times do
+#   Like.create(
+#     user_id: Faker
+#   )
+# end
